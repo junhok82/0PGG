@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.junho.dto.ChampionLotation;
 import com.junho.dto.ChampionMastery;
+import com.junho.dto.CurrentGameInfo;
 import com.junho.dto.MatchList;
 import com.junho.dto.Summoner;
 import com.junho.util.ChampionLotationParser;
 import com.junho.util.ChampionMasteryParser;
+import com.junho.util.CurrentGameInfoParser;
 import com.junho.util.MatchListParser;
 import com.junho.util.SummonerParser;
 
@@ -32,8 +34,7 @@ public class Controller {
 		// 숙련도 정보 
 		String summonerid = summoner.getId();
 		ChampionMasteryParser championMasteryParser = new ChampionMasteryParser();
-		List<ChampionMastery> championMasteryList = championMasteryParser.getJsonData(summonerid);
-		
+		List<ChampionMastery> championMasteryList = championMasteryParser.getJsonData(summonerid);		
 //		for(ChampionMastery c : championMasteryList)
 //			System.out.println(c.toString());
 		
@@ -47,8 +48,13 @@ public class Controller {
 		String accountId = summoner.getAccountId();
 		MatchListParser matchListParser = new MatchListParser();
 		MatchList matchList = matchListParser.getJsonData(accountId);
+//		System.out.println(matchList.toString());
 		
-		System.out.println(matchList.toString());
+		
+		// 현재 게임정보
+		CurrentGameInfoParser currentGameInfoParser = new CurrentGameInfoParser();
+		CurrentGameInfo currentGameInfo = currentGameInfoParser.getJsonData(summonerid);
+//		System.out.println(currentGameInfo.toString());
 		
 		if(summoner != null && !summoner.equals(null)) {
 			return new ResponseEntity<Summoner>(summoner,HttpStatus.OK);
