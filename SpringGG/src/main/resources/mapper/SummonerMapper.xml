@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.junho.mapper.SummonerMapper">
+
+	<select id="findByName" resultType="com.junho.dto.Summoner">
+		SELECT * FROM USR_INFO WHERE NAME = #{name};
+	</select>
+	
+	<insert id="insertSummoner" parameterType="com.junho.dto.Summoner">
+		INSERT INTO USR_INFO VALUES(
+			#{accountId},
+			#{profileIconId},
+			#{revisionDate},
+			#{name},
+			#{id},
+			#{puuid},
+			#{summonerLevel})
+	</insert>
+	
+</mapper>

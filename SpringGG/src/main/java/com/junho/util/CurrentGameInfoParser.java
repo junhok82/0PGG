@@ -8,19 +8,17 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.junho.dto.Summoner;
+import com.junho.dto.ChampionLotation;
+import com.junho.dto.CurrentGameInfo;
 
-public class SummonerParser {
+public class CurrentGameInfoParser {
 	
-	public Summoner getJsonData(String name) {
+		public CurrentGameInfo getJsonData(String id) {
 		ObjectMapper objectMapper = new ObjectMapper();
+		String Summonerid = id.replaceAll(" ", "%20");
 		
-		// 공백 처리
-		String SummonerName = name.replaceAll(" ", "%20");
-		System.out.println(SummonerName);
-		
-		String requestURL 	= "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+ SummonerName + "?api_key=" + Key.API_KEY;
-		Summoner summoner 	= null;
+		String requestURL 				= "https://kr.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/" + Summonerid + "?api_key=" + Key.API_KEY;
+		CurrentGameInfo currentGameInfo = null;
 		
 		try {
 			HttpClient client = HttpClientBuilder.create().build(); // HttpClient 생성
@@ -32,7 +30,7 @@ public class SummonerParser {
 				ResponseHandler<String> handler = new BasicResponseHandler();
 				String body = handler.handleResponse(response);
 				
-				summoner = objectMapper.readValue(body, Summoner.class);   // String to Object로 변환
+				currentGameInfo = objectMapper.readValue(body, CurrentGameInfo.class);   // String to Object로 변환
 				 		
 			} else {
 				System.out.println("response is error : " + response.getStatusLine().getStatusCode());
@@ -41,6 +39,6 @@ public class SummonerParser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return summoner;
+		return currentGameInfo;
 	}
 }
