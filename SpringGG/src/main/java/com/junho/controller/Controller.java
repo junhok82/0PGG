@@ -10,10 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.junho.dto.ChampionLotation;
 import com.junho.dto.ChampionMastery;
+import com.junho.dto.CurrentGameInfo;
+import com.junho.dto.MatchList;
 import com.junho.dto.Summoner;
 import com.junho.service.SummonerService;
+import com.junho.util.ChampionLotationParser;
 import com.junho.util.ChampionMasteryParser;
+import com.junho.util.CurrentGameInfoParser;
+import com.junho.util.MatchListParser;
 import com.junho.util.SummonerParser;
 
 @RestController
@@ -48,7 +54,6 @@ public class Controller {
 		ChampionMasteryParser championMasteryParser = new ChampionMasteryParser();
 		List<ChampionMastery> championMasteryList = championMasteryParser.getJsonData(summonerid);
 		
-		/*
 		// 로테이션 정보
 		ChampionLotationParser championLotationParser = new ChampionLotationParser();
 		ChampionLotation championLotation = championLotationParser.getJsonData();		
@@ -65,7 +70,6 @@ public class Controller {
 		CurrentGameInfoParser currentGameInfoParser = new CurrentGameInfoParser();
 		CurrentGameInfo currentGameInfo = currentGameInfoParser.getJsonData(summonerid);
 		System.out.println("현재 게임 정보 : " + currentGameInfo.toString());
-		*/
 		
 		if(summoner != null && !summoner.equals(null)) {
 			return new ResponseEntity<Summoner>(summoner,HttpStatus.OK);
